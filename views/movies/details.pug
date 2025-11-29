@@ -1,0 +1,30 @@
+extends ../layout
+
+block content
+  h1= movie.name
+
+  .movie-card
+    p.meta Posted by #{movie.user ? movie.user.username : 'unknown'} on #{movie.createdAt ? movie.createdAt.toDateString() : 'unknown date'}
+
+    p Year: #{movie.year}
+    p Genres: #{Array.isArray(movie.genres) ? movie.genres.join(', ') : movie.genres}
+    p Rating: #{movie.rating}
+    p= movie.description
+
+    if user && movie.user && String(user._id) === String(movie.user._id)
+      .button-row
+        a.btn-edit(href=`/movies/${movie._id}/edit`) Edit
+        form(method="POST" action=`/movies/${movie._id}?_method=DELETE`)
+          button.btn-delete(type="submit") Delete
+
+  // convenience buttons (visible to logged-in users)
+  if user
+    .add-row
+      a.btn-add(href='/movies/add') + Add another movie
+      a.btn-back(href='/movies') ⬅ Back to Home
+  else
+    p
+      a(href='/login') Login
+      |  or
+      a(href='/register') Register
+      |  to add movies.

@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1 CineVault
+
+  if movies.length === 0
+    p No movies added yet.
+  else
+    each movie in movies
+      .movie-card
+        h2
+          a(href=`/movies/${movie._id}`)= movie.name
+
+        p.meta Posted by #{movie.user ? movie.user.username : 'unknown'} • #{movie.createdAt.toDateString()}
+
+        p= movie.description.length > 200 ? movie.description.substring(0,200) + '...' : movie.description
+
+        if user && movie.user && user._id == movie.user._id.toString()
+          .button-row
+            a.btn-edit(href=`/movies/${movie._id}/edit`) Edit
+            form(method="POST" action=`/movies/${movie._id}?_method=DELETE`)
+              button.btn-delete(type="submit") Delete

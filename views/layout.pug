@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    title Movies Project
+    link(rel="stylesheet" href="/style.css")
+    script(src="/main.js" defer)
+
+  body
+    header
+      nav.nav
+        a.brand(href="/") CineVault
+        if !user
+          a(href="/login") Login
+          a(href="/register") Register
+        else
+          a(href="/movies/add") Add Movie
+          a(href="/logout") Logout
+
+    main
+  if user
+    div(style="text-align:center; margin-top:25px; font-size:24px; font-weight:bold;")
+      | Hello #{user.username} 
+
+  .container
+    block content
+
+

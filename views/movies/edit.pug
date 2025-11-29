@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+  h1 Edit Movie
+  if errors && errors.length
+    ul.errors
+      each err in errors
+        li= err
+
+  form(method="POST" action=`/movies/${movie._id}?_method=PUT`)
+    div
+      label Name
+      input(type="text" name="name" value=movie.name)
+    div
+      label Description
+      textarea(name="description")= movie.description
+    div
+      label Year
+      input(type="number" name="year" value=movie.year)
+    div
+      label Genres
+      input(type="text" name="genres" value=movie.genres)
+    div
+      label Rating
+      input(type="number" step="0.1" min="0" max="10" name="rating" value=movie.rating)
+    button(type="submit") Save Changes
